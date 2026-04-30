@@ -1,21 +1,24 @@
-# AI & Orchestration
+# AI & LLM
 openai
 ollama
 chromadb
-python-dotenv
+langchain
 
-# Automation & Vision
+# System & Automation
 pyautogui
 pydirectinput
-opencv-python
-playwright
+psutil
+webbrowser-share
 
-# UI & Remote
+# UI & Voice
 PyQt6
-pytelegrambotapi
+ElevenLabs
+SpeechRecognition
+pyaudio
+
+# Tools & APIs
+python-telegram-bot
 spotipy
 obs-websocket-py
-
-# System
-psutil
-keyboard
+duckduckgo-search
+python-dotenv
