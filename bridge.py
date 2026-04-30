@@ -1,22 +1,18 @@
-import telebot
-import os
-import webbrowser
-from threading import Thread
+from telegram.ext import Application, MessageHandler, filters
+import pyautogui
 
-class MobileGateway(Thread):
+class TelegramBridge:
     def __init__(self, token):
-        super().__init__(daemon=True)
-        self.bot = telebot.TeleBot(token)
+        self.app = Application.builder().token(token).build()
+    
+    async def handle_message(self, update, context):
+        command = update.message.text.lower()
+        if "open browser" in command:
+            pyautogui.press('win')
+            pyautogui.write('chrome')
+            pyautogui.press('enter')
+            await update.message.reply_text("Browser opened on your desktop, Sir.")
 
     def run(self):
-        @self.bot.message_handler(func=lambda m: True)
-        def handle_commands(message):
-            cmd = message.text.lower()
-            if "open browser" in cmd:
-                webbrowser.open("https://google.com")
-                self.bot.reply_to(message, "Desktop browser opened, Sir.")
-            elif "screenshot" in cmd:
-                # Logic to trigger vision.py and return analysis
-                self.bot.reply_to(message, "Analyzing desktop view...")
-        
-        self.bot.polling()
+        self.app.add_handler(MessageHandler(filters.TEXT, self.handle_message))
+        self.app.run_polling()
