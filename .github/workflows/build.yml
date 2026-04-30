@@ -1,0 +1,20 @@
+name: Build Universal JARVIS
+on: [push]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt pyinstaller
+      - name: Compile EXE
+        run: pyinstaller --onefile --noconsole --icon=assets/visualizer/arc_reactor.ico src/main.py
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Jarvis-Windows-Build
+          path: dist/main.exe
