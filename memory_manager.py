@@ -1,20 +1,20 @@
 import psutil
 import gc
-import chromadb
+import time
+import threading
 
 class MemoryMonitor:
     def __init__(self, threshold=75):
         self.threshold = threshold
-        self.db = chromadb.PersistentClient(path="./assets/history")
-    
-    def check_ram(self):
-        usage = psutil.virtual_memory().percent
-        if usage > self.threshold:
-            print(f"RAM Alert: {usage}%. Purging cache...")
-            gc.collect()
-            return True
-        return False
+        self.running = True
 
-    def retrieve_context(self, query):
-        # Keeps context window small by only fetching relevant history
-        return self.db.query(query_texts=[query], n_results=3)
+    def start(self):
+        thread = threading.Thread(target=self._monitor, daemon=True)
+        thread.start()
+
+    def _monitor(self):
+        while self.running:
+            usage = psutil.virtual_memory().percent
+            if usage > self.threshold:
+                gc.collect()
+            time.sleep(30) # Check every 30s
