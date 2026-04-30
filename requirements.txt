@@ -1,0 +1,21 @@
+# AI & Orchestration
+openai
+ollama
+chromadb
+python-dotenv
+
+# Automation & Vision
+pyautogui
+pydirectinput
+opencv-python
+playwright
+
+# UI & Remote
+PyQt6
+pytelegrambotapi
+spotipy
+obs-websocket-py
+
+# System
+psutil
+keyboard
